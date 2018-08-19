@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
          has_many :tweets
+
            has_many :active_relationships,  class_name:  "Relationship",
                                    foreign_key: "follower_id",
                                    dependent:   :destroy
@@ -12,5 +13,20 @@ class User < ApplicationRecord
                                    foreign_key: "followed_id",
                                    dependent:   :destroy
   has_many :following, through: :active_relationships,  source: :followed
+
   has_many :followers, through: :passive_relationships, source: :follower
+
+  def following? (other_user)
+  	#esse método checa se usuario está seguindo outro
+  	followers.include? other_user
+  end
+
+  def follow!(other_user)
+  	#essemodo criará o relacionamento entre um usuario e outro
+  	#active_relationships.create(followed_id: other_user)
+  	following << other_user
+  end
+  def unfollow!(other_user)
+  	following.destroy(other_user)
+  end
 end

@@ -1,6 +1,9 @@
 show.html.erb
-<h1>Perfil do <% @user.email %></h1>
+<h1>Perfil do <%= @user.email %></h1>
 <h2>Tweets (<%= @user.tweets.count %>)</h2>
+<hr>
+<h3>Seguidores (<%= @user.followers.count %>)</h3>
+<h3>Seguindo (<%= @user.following.count %>)</h3>
 
 
 <% if @user.tweets.empty? %>
